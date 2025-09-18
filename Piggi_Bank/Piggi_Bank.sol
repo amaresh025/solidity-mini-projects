@@ -2,33 +2,34 @@
 pragma solidity ^0.8.0;
 
 contract PiggiBank {
-    // Contract ka owner (jo deploy karega wo owner banega)
+    // Contract owner (the one who deploys will be the owner)
     address public owner;
 
-    // Mapping to track user balances (kisne kitna deposit kiya)
+    // Mapping to track how much each user deposited
     mapping (address => uint) public balance;
 
-    // Constructor - deploy hone par owner set hoga
+    // Constructor - sets the deployer as the owner
     constructor () {
         owner = msg.sender;
     }
 
-    // Deposit function - koi bhi apna ETH contract me deposit kar sakta hai
+    // Deposit function - anyone can deposit ETH into the contract
     function deposit() public payable {
-        balance[msg.sender] += msg.value; // User ka balance update ho jayega
+        balance[msg.sender] += msg.value; // Update the sender’s balance
     }
 
-    // Contract ka total ETH balance check karne ke liye
+    // Returns the total ETH stored in the contract
     function checkBalance() public view returns (uint) {
-        return address(this).balance; // Contract ke andar kitna ETH pada hai
+        return address(this).balance; // Current contract balance
     }
 
-    // Withdraw function - sirf owner hi withdraw kar sakta hai
+    // Withdraw function - only the owner can withdraw ETH
     function withdraw(uint _value) public {
-        require(msg.sender == owner, "You are Not owner!"); // Sirf owner allowed
-        require(_value <= address(this).balance, "amount is out of range"); // Amount valid hai ya nahi
+        require(msg.sender == owner, "You are Not owner!"); // Only owner allowed
+        require(_value <= address(this).balance, "Amount exceeds balance"); // Validate amount
 
-        balance[msg.sender] -= _value; // Owner ka balance update hoga
-        payable(owner).transfer(_value); // ETH transfer owner ke account me
+        balance[msg.sender] -= _value; // Update the owner’s balance
+        payable(owner).transfer(_value); // Transfer ETH to owner
     }
 }
+
