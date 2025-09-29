@@ -2,7 +2,7 @@
 pragma solidity ^0.8.0;
 
 contract Voting {
-    address private owner; //Owner of this contract
+    address private owner;
 
     constructor () {
         owner = msg.sender; //Deployer becomes the owner
@@ -36,3 +36,4 @@ contract Voting {
         return candidates;
     }
 }
+
