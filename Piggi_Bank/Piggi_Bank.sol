@@ -2,7 +2,6 @@
 pragma solidity ^0.8.0;
 
 contract PiggiBank {
-    // Contract owner (the one who deploys will be the owner)
     address public owner;
 
     // Mapping to track how much each user deposited
@@ -32,5 +31,6 @@ contract PiggiBank {
         payable(owner).transfer(_value); // Transfer ETH to owner
     }
 }
+
 
 
